@@ -45,6 +45,8 @@ public class GitHubJob {
     }
     
     public GHIssue findIssue(int number, List<GHIssue> issues) {
+        //GHIssue issue=issues.Stream().map(issue->issue.getNumber()).filter(x->x==number).findAny().get()
+        
     if (issues != null) {
         for (GHIssue issue : issues) {
             if (issue.getNumber() == number) {
