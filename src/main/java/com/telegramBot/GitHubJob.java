@@ -1,3 +1,5 @@
+package com.telegramBot;
+
 import org.kohsuke.github.*;
 
 import java.io.IOException;
@@ -14,7 +16,7 @@ public class GitHubJob {
 
     {
         try {
-            github = new GitHubBuilder().withOAuthToken("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").build();
+            github = new GitHubBuilder().withOAuthToken("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").build();
             repo = github.getRepository("noviygorod1k/task-tracking");
 
 
