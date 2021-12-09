@@ -36,6 +36,9 @@ public class GitHubJob {
     }
 
     private List<GHIssue> getOpenIssues(GHRepository ghRepository) throws IOException {
+//          List<GHIssue> issues = ghRepository.listIssues(GHIssueState.ALL)
+//       .withPageSize(1000)
+//       .asList();
         List<GHIssue> issues = ghRepository.getIssues(GHIssueState.OPEN);
         List<GHIssue> answer = new ArrayList<>();
         for (GHIssue issue : issues) {
