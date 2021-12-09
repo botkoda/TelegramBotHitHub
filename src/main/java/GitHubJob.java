@@ -14,28 +14,25 @@ public class GitHubJob {
 
     {
         try {
-            //github = new GitHubBuilder().withPassword("botkoda", "Simoron2016").build();
             github = new GitHubBuilder().withOAuthToken("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").build();
             repo = github.getRepository("noviygorod1k/task-tracking");
             List<GHIssue> issuesList = getOpenIssues(repo);
-
+            //все открытые таски
             issuesList.stream().forEach(x -> {
                 issueMap.put(x.getNumber(), x.getTitle());
             });
-
-            List<GHIssueComment> issuesCommentList= getCommentsIssues(issuesList,88); //коменты конкретного таска;
-
-            //  List<String> issuesTitle=issuesList.stream().map(x->x.getTitle()).collect(Collectors.toList());
+            //коменты конкретного таска;
+            List<GHIssueComment> issuesCommentList= getCommentsIssues(findIssue(88,issuesList)); 
+            //вывод в консоль    
             issueMap.forEach((k,v)-> System.out.println(k+" "+v));
             issuesCommentList.stream().forEach(x-> System.out.println(issuesCommentList.indexOf(x)+"-->"+x.getBody()));
-           // System.out.println(issueMap);
-            createIssue(repo,"test_lable");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private List<GHIssue> getOpenIssues(GHRepository ghRepository) throws IOException {
+    public List<GHIssue> getOpenIssues(GHRepository ghRepository) throws IOException {
 //          List<GHIssue> issues = ghRepository.listIssues(GHIssueState.ALL)
 //       .withPageSize(1000)
 //       .asList();
@@ -46,24 +43,39 @@ public class GitHubJob {
         }
         return answer;
     }
-
-    private List<GHIssueComment> getCommentsIssues(List<GHIssue> issuesList, int number) {
-        GHIssue issue = new GHIssue();
-        List<GHIssueComment> comments = null;
-        for (GHIssue i : issuesList) {
-            if (i.getNumber() == number) {
-                issue = i;
+    
+    public GHIssue findIssue(int number, List<GHIssue> issues) {
+    if (issues != null) {
+        for (GHIssue issue : issues) {
+            if (issue.getNumber() == number) {
+                return issue;
             }
         }
+    }
+    return null;
+}
+ 
+
+    public List<GHIssueComment> getCommentsIssues(GHIssue issue) {
+//         GHIssue issue = new GHIssue();
+//         List<GHIssueComment> comments = null;
+//         for (GHIssue i : issuesList) {
+//             if (i.getNumber() == number) {
+//                 issue = i;
+//             }
+//         }
+        if (issue != null) {
         try {
-            comments = issue.getComments();
+           List<GHIssueComment> comments = issue.getComments();
+           return comments;
         } catch (IOException e) {
             e.printStackTrace();
+        }   
         }
-        return comments;
+        return null;
     }
 
-    private void createIssue(GHRepository ghRepository,String lable){
+    public void createIssue(GHRepository ghRepository,String lable){
         ghRepository.createIssue(lable);
 
     }
