@@ -70,7 +70,7 @@ public class GitHubJob {
             try {
                 listIssueWithComment.add("Тема: " +issue.getNumber()+"."+issue.getTitle());
                 listIssueWithComment.add("Проблема: " + issue.getBody());
-                for (var l : issue.getComments()) {
+                for (GHIssueComment l : issue.getComments()) {
                     listIssueWithComment.add("Коммент: " + l.getBody());
                 }//.stream().map(x->listIssueWithComment.add("Комментарии:" +x.getBody() ));
                 return listIssueWithComment;

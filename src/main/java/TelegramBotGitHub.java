@@ -5,7 +5,9 @@ import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.BaseRequest;
 import com.pengrad.telegrambot.request.SendMessage;
+import org.kohsuke.github.GHIssueComment;
 
+import java.util.List;
 import java.util.Map;
 
 public class TelegramBotGitHub {
@@ -46,7 +48,7 @@ public class TelegramBotGitHub {
 
         if ((spMessage[0].equals("gitissue") || spMessage[0].equals("Gitissue")) && numberIssue > 0) {
             StringBuffer sb = new StringBuffer();
-            var issueWithComment = new GitHubJob().getCommentsIssues(numberIssue);
+            List<String> issueWithComment = new GitHubJob().getCommentsIssues(numberIssue);
             long chatId = message.chat().id();
             if (!issueWithComment.isEmpty() && issueWithComment != null) {
                 issueWithComment.forEach(x ->
