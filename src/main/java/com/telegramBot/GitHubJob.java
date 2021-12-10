@@ -83,8 +83,9 @@ public class GitHubJob {
         return listIssueWithComment;
     }
 
-    public GHIssueBuilder createIssue(GHRepository ghRepository, String lable) {
+    public void createIssue(GHRepository ghRepository, String lable) {
         GHIssueBuilder ghIssueBuilder = ghRepository.createIssue(lable);
-        return ghIssueBuilder;
+        ghIssueBuilder.create();
+        
     }
 }
