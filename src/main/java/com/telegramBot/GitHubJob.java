@@ -70,7 +70,7 @@ public class GitHubJob {
         List<String> listIssueWithComment = new ArrayList<>();
         if (issue != null) {
             try {
-                listIssueWithComment.add("Тема: " +issue.getNumber()+"."+issue.getTitle());
+                listIssueWithComment.add("Тема: " + issue.getNumber() + "." + issue.getTitle());
                 listIssueWithComment.add("Проблема: " + issue.getBody());
                 for (GHIssueComment l : issue.getComments()) {
                     listIssueWithComment.add("Коммент: " + l.getBody());
@@ -83,6 +83,7 @@ public class GitHubJob {
         return listIssueWithComment;
     }
 
+
     public void createIssue(String lable) {
         try {
             GHIssueBuilder ghIssueBuilder = repo.createIssue(lable);
@@ -91,4 +92,5 @@ public class GitHubJob {
             System.out.println("Ошибка создания issue");
         }
     }
+
 }
