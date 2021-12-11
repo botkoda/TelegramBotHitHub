@@ -16,7 +16,7 @@ public class GitHubJob {
 
     {
         try {
-            github = new GitHubBuilder().withOAuthToken("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").build();
+            github = new GitHubBuilder().withOAuthToken("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").build();
             repo = github.getRepository("noviygorod1k/task-tracking");
 
 
@@ -83,8 +83,12 @@ public class GitHubJob {
         return listIssueWithComment;
     }
 
-    public GHIssueBuilder createIssue(GHRepository ghRepository, String lable) {
-        GHIssueBuilder ghIssueBuilder = ghRepository.createIssue(lable);
-        return ghIssueBuilder;
+    public void createIssue(String lable) {
+        try {
+            GHIssueBuilder ghIssueBuilder = repo.createIssue(lable);
+            ghIssueBuilder.create();
+        } catch (IOException e) {
+            System.out.println("Ошибка создания issue");
+        }
     }
 }
