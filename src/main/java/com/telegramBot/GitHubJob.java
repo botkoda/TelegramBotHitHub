@@ -16,7 +16,7 @@ public class GitHubJob {
 
     {
         try {
-            github = new GitHubBuilder().withOAuthToken("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").build();
+            github = new GitHubBuilder().withOAuthToken(GIT_TOKEN).build();
             repo = github.getRepository("noviygorod1k/task-tracking");
 
 
