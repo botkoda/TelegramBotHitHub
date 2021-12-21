@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class TelegramBotGitHub {
     GitHubJob gitHubJob;
-    private final TelegramBot telegramBot = new TelegramBot("5018667969:AAEtthCDW2RDgY7c0j1ANV43HTNMd-k79D4");
+    private final TelegramBot telegramBot = new TelegramBot(TELEGRAM_TOKEN);
 
     public TelegramBotGitHub(GitHubJob gitHubJob) {
         this.gitHubJob = gitHubJob;
