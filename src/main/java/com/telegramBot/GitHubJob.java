@@ -3,10 +3,7 @@ package com.telegramBot;
 import org.kohsuke.github.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class GitHubJob {
@@ -16,7 +13,7 @@ public class GitHubJob {
 
     {
         try {
-            github = new GitHubBuilder().withOAuthToken(GIT_TOKEN).build();
+            github = new GitHubBuilder().withOAuthToken("").build();
             repo = github.getRepository("noviygorod1k/task-tracking");
 
 
@@ -37,7 +34,17 @@ public class GitHubJob {
         if (repo != null) {
             try {
                 List<GHIssue> issues = repo.getIssues(GHIssueState.OPEN);
-                issues.stream().forEach(x -> issueMap.put(x.getNumber(), x.getTitle()));
+                issues.stream().forEach(x -> {
+                    try {
+                        if (x.getAssignee() != null) {
+                            issueMap.put(x.getNumber(), x.getTitle() + "..(отв: " + x.getAssignee().getLogin() + ")");
+                        } else {
+                            issueMap.put(x.getNumber(), x.getTitle() + "...(отв: НЕТ)");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
                 return issueMap;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -91,6 +98,25 @@ public class GitHubJob {
         } catch (IOException e) {
             System.out.println("Ошибка создания issue");
         }
+    }
+
+    public Set<String> getOpenIssueYear() {
+        Set<String> setIssueYear = new HashSet<>();
+        if (repo != null) {
+            try {
+                List<GHIssue> issues = repo.getIssues(GHIssueState.OPEN);
+                issues.stream().forEach(x -> {
+                    if (x.getMilestone() != null) {
+                        setIssueYear.add(x.getMilestone().getTitle());
+                    } else
+                        setIssueYear.add("НЕТ");
+                });
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return setIssueYear;
     }
 
 }
