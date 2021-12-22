@@ -13,7 +13,7 @@ public class GitHubJob {
 
     {
         try {
-            github = new GitHubBuilder().withOAuthToken("").build();
+            github = new GitHubBuilder().withOAuthToken("gittoken").build();
             repo = github.getRepository("noviygorod1k/task-tracking");
 
 
@@ -37,9 +37,19 @@ public class GitHubJob {
                 issues.stream().forEach(x -> {
                     try {
                         if (x.getAssignee() != null) {
-                            issueMap.put(x.getNumber(), x.getTitle() + "..(отв: " + x.getAssignee().getLogin() + ")");
+                            if (x.getMilestone() != null) {
+                                issueMap.put(x.getNumber(), x.getTitle() + "..(отв: " + x.getAssignee().getLogin() + ")" + "%%%" + x.getMilestone().getTitle());
+                            } else {
+                                issueMap.put(x.getNumber(), x.getTitle() + "..(отв: " + x.getAssignee().getLogin() + ")" + "%%%НЕТ");
+                            }
+
                         } else {
-                            issueMap.put(x.getNumber(), x.getTitle() + "...(отв: НЕТ)");
+                            if (x.getMilestone() != null) {
+                                issueMap.put(x.getNumber(), x.getTitle() + "...(отв: НЕТ)" + "%%%" + x.getMilestone().getTitle());
+                            } else {
+                                issueMap.put(x.getNumber(), x.getTitle() + "...(отв: НЕТ)" + "%%%НЕТ");
+                            }
+
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -116,6 +126,7 @@ public class GitHubJob {
                 e.printStackTrace();
             }
         }
+        setIssueYear.add("ВСЕ");
         return setIssueYear;
     }
 
